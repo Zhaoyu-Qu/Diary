@@ -23,15 +23,12 @@ using (var scope = app.Services.CreateScope())
     DatabaseInitialiser.InitialiseDatabase(dbContext);
 }
 
-// These lines check if the app is running in the Development environment. If so, they call app.UseSwaggerUI(), which exposes the OpenAPI (Swagger) endpoint for your API. This allows you to view and interact with the API documentation and test endpoints in development, but keeps it hidden in production for security reasons.
-if (app.Environment.IsDevelopment())
+// enable Swagger UI
+app.MapOpenApi();
+app.UseSwaggerUI(options =>
 {
-    app.MapOpenApi();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "v1");
-    });
-}
+    options.SwaggerEndpoint("/openapi/v1.json", "v1");
+});
 
 app.MapGet("/home", () => "Welcome to the Diary API");
 
