@@ -1,10 +1,8 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
-using Xunit;
+﻿using Microsoft.EntityFrameworkCore;
 using Diary.DataContext;
 using Diary.Services.Database;
 
-namespace Diary.UnitTests
+namespace Diary.UnitTests.Services
 {
     public class DatabaseInitialiserTests
     {
