@@ -1,5 +1,6 @@
 using Diary.EntityModels;
 using Diary.Services;
+using Diary.Services.Interfaces;
 using Diary.UnitTests.TestHelpers;
 
 namespace Diary.UnitTests.Services
@@ -7,7 +8,7 @@ namespace Diary.UnitTests.Services
     public class NoteServiceTests : IDisposable
     {
         private readonly DatabaseFixture _fixture;
-        private readonly NoteService _service;
+        private readonly INoteService _service;
 
         public NoteServiceTests()
         {
