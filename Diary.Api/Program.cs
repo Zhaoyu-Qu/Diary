@@ -1,12 +1,18 @@
 using Diary.DataContext;
+using Diary.Services;
 using Diary.Services.Database;
+using Diary.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
-// OpenAPI is a specification for describing RESTful APIs in a standardized, machine-readable format. In ASP.NET Core, adding OpenAPI support (often via Swagger) automatically generates interactive API documentation and a JSON schema for your endpoints. This helps developers and clients understand, test, and integrate with your API easily, without needing to read the source code. The lines in your Program.cs enable this documentation and UI for your web API.
-builder.Services.AddOpenApi();
+// Register DbContext
 builder.Services.AddDbContext<DiaryDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DiaryDatabase")));; // Register DbContext
+    options.UseSqlite(builder.Configuration.GetConnectionString("DiaryDatabase")));
+builder.Services.AddOpenApi();
+// registers the controller services and enables dependency injection for controllers.
+builder.Services.AddControllers();
+// registers the NoteService class as the implementation for the INoteService interface in the dependency injection container.
+builder.Services.AddScoped<INoteService, NoteService>();
 
 var app = builder.Build();
 
@@ -17,11 +23,19 @@ using (var scope = app.Services.CreateScope())
     DatabaseInitialiser.InitialiseDatabase(dbContext);
 }
 
-// These lines check if the app is running in the Development environment. If so, they call app.MapOpenApi(), which exposes the OpenAPI (Swagger) endpoint for your API. This allows you to view and interact with the API documentation and test endpoints in development, but keeps it hidden in production for security reasons.
+// These lines check if the app is running in the Development environment. If so, they call app.UseSwaggerUI(), which exposes the OpenAPI (Swagger) endpoint for your API. This allows you to view and interact with the API documentation and test endpoints in development, but keeps it hidden in production for security reasons.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "v1");
+    });
 }
 
+app.MapGet("/home", () => "Welcome to the Diary API");
+
+// maps the controller endpoints to the routing system so that HTTP requests are routed to your controller actions.
+app.MapControllers();
 
 app.Run();
