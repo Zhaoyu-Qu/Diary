@@ -9,6 +9,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Diary.EntityModels/Diary.EntityModels.csproj" />
+    <ProjectReference Include="../Diary.Common/Diary.Common.csproj" />
+    <ProjectReference Include="../Diary.DataContext/Diary.DataContext.csproj" />
+    <ProjectReference Include="../Diary.Services/Diary.Services.csproj" />
   </ItemGroup>
 
 </Project>
