@@ -9,7 +9,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
   </ItemGroup>
-  <!-- <ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../Diary.EntityModels/Diary.EntityModels.csproj" />
-  </ItemGroup> -->
+    <ProjectReference Include="../Diary.DataContext/Diary.DataContext.csproj" />
+  </ItemGroup>
 </Project>
